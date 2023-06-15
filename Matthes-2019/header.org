@@ -1,0 +1,5 @@
+#+Title: Exercises chapter 
+#+Author: Saul SL
+#+date: June 2023
+#+options: broken-links:t ^:{} toc:nil
+#+SETUPFILE: ../latex_conf.org

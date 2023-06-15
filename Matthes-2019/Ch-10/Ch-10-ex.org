@@ -1,0 +1,253 @@
+#+Title: Exercises chapter 10: Files and exceptions
+#+Author: Saul SL
+#+date: June 2023
+#+options: broken-links:t ^:{} toc:nil
+#+SETUPFILE: ../latex_conf.org
+
+
+* Exercise 10-1 Learning Python
+Open a blank file in your text editor and write a few lines summarizing what you’ve learned about Python so far. Start each line with the phrase In Python you can. . . . Save the file as =learning_python.txt= in the same directory as your exercises from this chapter. Write a program that reads the file and prints what you wrote three times. Print the contents once by reading in the entire file, once by looping over the file object, and once by storing the lines in a list and then working with them outside the with block.
+#+begin_src python -i
+import datetime
+import sys
+import os
+os.chdir('/home/saul/Documents/Apuntes/Python/Matthes-2019/Ch-10')
+ifile = 'learning_python.txt'
+
+# Read the entire file
+with open(ifile) as fh:
+    whole_txt = fh.read()
+print(whole_txt)
+
+# size of the object
+isize = sys.getsizeof(whole_txt)
+print(isize, "bytes")
+
+# Read line by line
+with open(ifile) as fh:
+    for line in fh:
+        print(line.strip())
+
+# Store the lines in an object
+with open(ifile) as fh:
+    lines = fh.readlines()
+
+for line in lines:
+    print(line.strip())
+
+isize2 = sys.getsizeof(lines)
+print(isize2, "bytes")
+#+end_src
+
+* Exercise 10-2 Learning C
+You can use the =replace()= method to replace any word in a string with a different word. Here’s a quick example showing how to replace 'dog' with 'cat' in a sentence:
+#+begin_src 
+>>> message = "I really like dogs."
+>>> message.replace('dog', 'cat')
+'I really like cats.'
+#+end_src
+Read in each line from the file you just created, =learning_python.txt=, and replace the word Python with the name of another language, such as C. Print each modified line to the screen.
+
+#+begin_src python -i
+with open(ifile) as fh:
+    lines2 = fh.readlines()
+
+for line in lines2:
+    print(line.strip().replace('Python', 'R'))
+#+end_src
+
+* Exercise 10-3 Guest
+Write a program that prompts the user for their name. When they respond, write their name to a file called =guest.txt=.
+#+begin_src python -i
+u_name = input("Please write your name: ")
+out_file = 'guests.txt'
+with open(out_file, 'w') as fh:
+    fh.write(u_name)
+#+end_src
+
+* Exercise 10-4 Guest Book
+Write a while loop that prompts users for their name. When they enter their name, print a greeting to the screen and add a line recording their visit in a file called =guest_book.txt=. Make sure each entry appears on a new line in the file.
+#+begin_src python -i
+out_file = 'guests_book.txt'
+with open(out_file, 'w') as fh:
+    fh.write("List of guests\n")
+
+print("Please write your name.\nType 'q' to exit")
+while True:
+    iname = input("Name: ")
+    if iname == 'q':
+        break
+    else:
+        with open(out_file, 'a') as fh:
+            now_time = datetime.datetime.now()
+            itime = now_time.strftime("%Y-%m-%d_%H:%M:%S")
+            fh.write(f"- {itime}:\t {iname} \n")
+#+end_src
+
+* Exercise 10-5 Programming Poll
+Write a while loop that asks people why they like programming. Each time someone enters a reason, add their reason to a file that stores all the responses.
+#+begin_src python -i
+out_file = 'programming_poll.txt'
+with open(out_file, 'w') as fh:
+    fh.write("Why do you like programming?\n")
+
+print("Why do you like programming?\n")
+print("Please write your answer.\nType 'q' to exit")
+while True:
+    ianswer = input("Answer: ")
+    if ianswer == 'q':
+        break
+    else:
+        with open(out_file, 'a') as fh:
+            now_time = datetime.datetime.now()
+            itime = now_time.strftime("%y-%m-%d_%H:%M:%S")
+            fh.write(f"- {itime}:\t {ianswer} \n")
+#+end_src
+
+* Exercise 10-7 Addition Calculator
+Wrap your code from Exercise 10-6 in a while loop so the user can continue entering numbers even if they make a mistake and enter text instead of a number.
+#+begin_src python -i
+print("Insert two numbers. Their sum will be calculated")
+print("Type 'q' to exit")
+
+while True:
+    inum1 = input("1st Number: ")
+    inum2 = input("2nd Number: ")
+    if inum1 == 'q' or inum2 == 'q':
+        break
+
+    try:
+        inum1 = int(inum1)
+        inum2 = int(inum2)
+        
+    except ValueError:
+        print('The program needs a numeric input')
+        print('Please try again')
+
+    else:
+        isum = inum1 + inum2
+        print(f"{inum1} + {inum2} = {isum}")
+#+end_src
+
+* Exercise 10-8 Cats and Dogs
+Make two files, cats.txt and dogs.txt. Store at least three names of cats in the first file and three names of dogs in the second file. Write a program that tries to read these files and print the contents of the file to the screen. Wrap your code in a try-except block to catch the FileNotFound error, and print a friendly message if a file is missing. Move one of the files to a different location on your system, and make sure the code in the except block executes properly.
+#+begin_src python -i
+in_files = ['Cats.txt', 'dogs.txt']
+for ifile in in_files:
+    try:
+        with open(ifile) as fh:
+            lines = fh.readlines()
+
+    except FileNotFoundError:
+        print(f"File '{ifile}' not found")
+
+    else:
+        print(f"'{ifile}' contents:")
+        for line in lines:
+            print(line.strip())
+        print("")
+
+# # 10-9
+in_files = ['Cats.txt', 'dogs.txt']
+for ifile in in_files:
+    try:
+        with open(ifile) as fh:
+            lines = fh.readlines()
+
+    except FileNotFoundError:
+        pass
+
+    else:
+        print(f"'{ifile}' contents:")
+        for line in lines:
+            print(line.strip())
+        print("")
+#+end_src
+
+* Exercise 10-10 Common Words
+Visit Project Gutenberg (https://gutenberg.org/ ) and find a few texts you’d like to analyze. Download the text files for these works, or copy the raw text from your browser into a text file on your computer. You can use the =count()= method to find out how many times a word or phrase appears in a string. For example, the following code counts the number of times 'row' appears in a string:
+#+begin_src 
+>>> line = "Row, row, row your boat"
+>>> line.count('row')
+2
+>>> line.lower().count('row')
+3
+#+end_src
+Notice that converting the string to lowercase using =lower()= catches all appearances of the word you’re looking for, regardless of how it’s formatted. Write a program that reads the files you found at Project Gutenberg and determines how many times the word 'the' appears in each text. This will be an approximation because it will also count words such as 'then' and 'there'. Try counting 'the ', with a space in the string, and see how much lower your count is.
+
+#+begin_src python -i
+ebooks = ['War_of_the_worlds.txt', 'Free_as_Freedom.txt']
+word = 'the '
+for ebook in ebooks:
+    try:
+        with open(ebook) as eb:
+            content = eb.read()
+    except FileNotFoundError:
+        pass
+    else:
+        print(f"Book: {ebook}")
+        occurrences = content.lower().count(word)
+        print (f"The word, '{word}' appears {occurrences} times")
+#+end_src
+
+* Exercise 10-11 Favorite Number
+Write a program that prompts for the user’s favorite number. Use json.=dump()= to store this number in a file. Write a separate program that reads in this value and prints the message, =“I know your favorite number! It’s _____.”=
+#+begin_src python -i
+import json
+
+# Write part
+print("Write your favorite number.\nType 'q' to exit")
+fav_num = input("Number: ")
+out_file = 'Favorite_number.json'
+with open(out_file, 'w') as fh:
+    json.dump(fav_num, fh)
+    print('Input recorded')
+
+# read part
+try:
+    with open(out_file) as fh:
+        content = json.load(fh)
+except FileNotFoundError:
+    pass
+else:
+    print(f"Your favorite number is: {content}")
+#+end_src
+
+* Exercise 10-12 Favorite Number Remembered
+Combine the two programs from Exercise 10-11 into one file. If the number is already stored, report the favorite number to the user. If not, prompt for the user’s favorite number and store it in a file. Run the program twice to see that it works.
+#+begin_src python -i
+import json 
+
+def get_stored_username(user):
+     """Get stored username if available."""
+     filename = f'{user}.json'
+     try:
+         with open(filename) as f:
+             username = json.load(f)
+     except FileNotFoundError:
+         return None
+     else:
+         return username
+
+def get_new_username(user):
+    # """Prompt for a new username."""
+    # username = input("What is your name? ")
+    username = user
+    filename = f'{username}.json'
+    with open(filename, 'w') as f:
+        json.dump(username, f)
+    return username 
+
+def greet_user(user):
+    """Greet the user by name."""
+    username = get_stored_username(user)
+    if username:
+        print(f"Welcome back, {username}!")
+    else:
+        username = get_new_username(user)
+        print(
+            f"We'll remember you when you come back, {username}!"
+        )
+        
+greet_user('tim')
+#+end_src

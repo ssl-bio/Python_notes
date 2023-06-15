@@ -1,0 +1,8 @@
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [a4paper]
+#+LATEX_HEADER: \usepackage[x11names]{xcolor}
+#+LATEX_HEADER: \usepackage[backend=biber,style=authoryear,maxcitenames=2,maxbibnames=100,uniquename=false,uniquelist=false]{biblatex}
+#+LATEX_HEADER: \usepackage{minted,hyperref,url,doi, calc, geometry}
+#+LATEX_HEADER: \usemintedstyle{monokai}
+#+LATEX_HEADER: \setminted[python]{bgcolor=darkgray, fontsize=\footnotesize, linenos, baselinestretch=1.2, framesep=2mm, frame=lines}
+#+LATEX_HEADER: \geometry{vdivide={20mm,*,20mm},hdivide={20mm,*,20mm}}
