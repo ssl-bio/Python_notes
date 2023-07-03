@@ -15,6 +15,7 @@
 *.tex
 *.toc
 Readme.org
+\#*
 
 # Aux folders
 __pycache__/
@@ -22,3 +23,8 @@ _minted*/
 auto/
 pcc_2e/
 Ch-[1-2]/
+aux/
+
+# Other folders
+Hand_written_notes/
+Dabbas-2021/

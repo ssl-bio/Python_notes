@@ -2,7 +2,7 @@
 #+Author: Saul SL
 #+date: June 2023
 #+options: broken-links:t ^:{} toc:nil
-#+SETUPFILE: ../latex_conf.org
+#+SETUPFILE: ../../latex_conf.org
 
 * Exercise 4-1 Pizzas
 Think of at least three kinds of your favorite pizza. Store these
