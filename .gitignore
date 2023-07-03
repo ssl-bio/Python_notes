@@ -6,8 +6,6 @@
 *.json
 *.html
 *.log
-*notes.py
-*notes.org
 *.out     
 *.png
 *.run.xml 
@@ -28,3 +26,4 @@ aux/
 # Other folders
 Hand_written_notes/
 Dabbas-2021/
+Nelli-2018/Ch-3/
